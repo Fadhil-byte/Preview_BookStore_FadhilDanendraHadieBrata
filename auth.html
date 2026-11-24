@@ -10,146 +10,155 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Top Preview Bar Switcher -->
     <div class="preview-bar">
         <div class="preview-bar-brand">
             <span>PREVIEW MODE</span>
-            <span style="color: #64748b;">|</span>
+            <span style="color: #475569;">|</span>
             <span>Toko Buku USK</span>
         </div>
         <div class="preview-bar-links">
-            <a href="index.html" class="preview-bar-link">1. Home Page</a>
+            <a href="index.html" class="preview-bar-link">1. Landing Page</a>
             <a href="auth.html" class="preview-bar-link active">2. Login &amp; Regist</a>
-            <a href="user.html" class="preview-bar-link">3. User Page</a>
+            <a href="user.html" class="preview-bar-link">3. Panel User</a>
+            <a href="admin.html" class="preview-bar-link">4. Panel Admin</a>
         </div>
     </div>
 
-    <header class="main-header">
-        <div class="header-container">
-            <a href="index.html" class="logo-brand">
-                <div class="logo-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+    <!-- Main Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-brand-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff;"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
                 </div>
                 <span>BukuKita USK</span>
             </a>
 
-            <nav class="main-nav">
-                <a href="index.html" class="nav-item">Home</a>
-                <a href="index.html#katalog" class="nav-item">Katalog Buku</a>
-                <a href="user.html" class="nav-item">Dashboard User</a>
-                <a href="auth.html" class="nav-item active">Masuk / Daftar</a>
-            </nav>
-
-            <div class="header-actions">
-                <a href="index.html" class="btn btn-secondary btn-sm">&larr; Kembali ke Home</a>
+            <div class="nav-right">
+                <a href="index.html" class="btn btn-secondary btn-sm">&larr; Kembali ke Beranda</a>
             </div>
         </div>
     </header>
 
-    <div class="auth-wrapper">
-        <div class="auth-card">
-            <div class="auth-tabs">
-                <button type="button" class="auth-tab active" id="tab-btn-login" onclick="switchAuthTab('login')">
+    <main class="container" style="max-width: 500px; padding: 40px 16px;">
+        <div class="card" style="padding: 32px 36px; box-shadow: var(--shadow-lg);">
+            <!-- Auth Tab Buttons -->
+            <div style="display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 24px;">
+                <button type="button" id="tab-login-btn" onclick="switchAuthMode('login')" style="flex: 1; padding: 12px 16px; background: none; border: none; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--primary); border-bottom: 3px solid var(--primary); margin-bottom: -2px;">
                     Masuk ke Akun
                 </button>
-                <button type="button" class="auth-tab" id="tab-btn-register" onclick="switchAuthTab('register')">
+                <button type="button" id="tab-register-btn" onclick="switchAuthMode('register')" style="flex: 1; padding: 12px 16px; background: none; border: none; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -2px;">
                     Daftar Akun Baru
                 </button>
             </div>
 
-            <div class="auth-body">
-                <div id="auth-alert" class="alert alert-info" style="display: flex;">
-                    <span>Sistem mewajibkan pendaftaran akun menggunakan alamat email <strong>@gmail.com</strong>.</span>
+            <!-- LOGIN VIEW -->
+            <div id="auth-login-pane">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Selamat Datang Kembali</h2>
+                    <p style="font-size: 13.5px; color: var(--text-muted);">Masukkan email dan kata sandi Anda untuk mengakses akun Toko Buku USK</p>
                 </div>
 
-                <div id="form-login-box">
-                    <div style="margin-bottom: 24px; text-align: center;">
-                        <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Selamat Datang Kembali</h2>
-                        <p style="font-size: 13px; color: var(--text-muted);">Masukkan email dan kata sandi Anda untuk mengakses katalog transaksi</p>
+                <form onsubmit="handleLoginPreview(event)">
+                    <div style="margin-bottom: 18px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Alamat Email</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="nama@gmail.com" value="user@gmail.com" required>
                     </div>
 
-                    <form onsubmit="handleLoginSubmit(event)">
-                        <div class="form-group">
-                            <label class="form-label" for="login-email">Alamat Email *</label>
-                            <input type="email" id="login-email" class="form-control" placeholder="user@gmail.com" value="user@gmail.com" required>
-                            <div class="form-hint">Contoh akun siap pakai: user@gmail.com</div>
+                    <div style="margin-bottom: 18px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label style="font-size: 13px; font-weight: 600; color: var(--text-main);">Kata Sandi</label>
+                            <span style="font-size: 12px; color: var(--primary); cursor: pointer;" onclick="alert('Silakan gunakan akun demo yang tertera di bawah.')">Lupa sandi?</span>
                         </div>
-
-                        <div class="form-group">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <label class="form-label" for="login-password" style="margin-bottom: 0;">Password *</label>
-                                <a href="javascript:void(0)" onclick="showToast('Fitur reset password tersedia melalui kontak administrator')" style="font-size: 12px;">Lupa Password?</a>
-                            </div>
-                            <input type="password" id="login-password" class="form-control" value="user1234" required>
-                        </div>
-
-                        <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
-                            <input type="checkbox" id="remember-me" checked>
-                            <label for="remember-me" style="font-size: 13px; color: var(--text-muted); cursor: pointer;">Ingat sesi login saya</label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px;">
-                            Masuk Sekarang
-                        </button>
-                    </form>
-
-                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 13px; color: var(--text-muted);">
-                        Belum memiliki akun? <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="font-weight: 700;">Daftar Akun Baru</a>
+                        <input type="password" id="login-password" class="form-control" placeholder="Masukkan kata sandi..." value="user1234" required>
                     </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 22px;">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me" style="font-size: 13px; color: var(--text-muted); cursor: pointer;">Ingat sesi login saya</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 14.5px; font-weight: 700;">
+                        Masuk ke Akun &rarr;
+                    </button>
+                </form>
+
+                <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                    <span style="font-size: 13px; color: var(--text-muted);">Belum memiliki akun pembeli? </span>
+                    <a href="javascript:void(0)" onclick="switchAuthMode('register')" style="font-size: 13px; font-weight: 700;">Daftar Sekarang</a>
                 </div>
 
-                <div id="form-register-box" style="display: none;">
-                    <div style="margin-bottom: 24px; text-align: center;">
-                        <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Buat Akun Pelanggan</h2>
-                        <p style="font-size: 13px; color: var(--text-muted);">Daftarkan identitas Anda untuk memesan buku dan memantau status pesanan</p>
-                    </div>
-
-                    <form onsubmit="handleRegisterSubmit(event)">
-                        <div class="form-group">
-                            <label class="form-label" for="reg-nama">Nama Lengkap *</label>
-                            <input type="text" id="reg-nama" class="form-control" placeholder="Contoh: Muhammad Fadhil" value="Muhammad Fadhil" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="reg-email">Alamat Email (@gmail.com) *</label>
-                            <input type="email" id="reg-email" class="form-control" placeholder="nama.anda@gmail.com" value="fadhil.usk@gmail.com" required>
-                            <div class="form-hint" style="color: #2563eb; font-weight: 600;">Wajib berakhiran domain @gmail.com</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="reg-password">Password (Minimal 8 Karakter) *</label>
-                            <input type="password" id="reg-password" class="form-control" placeholder="Minimal 8 karakter" value="fadhil1234" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="reg-password-confirm">Konfirmasi Password *</label>
-                            <input type="password" id="reg-password-confirm" class="form-control" placeholder="Ulangi password di atas" value="fadhil1234" required>
-                        </div>
-
-                        <div class="form-group" style="display: flex; align-items: flex-start; gap: 8px;">
-                            <input type="checkbox" id="terms-agree" checked required style="margin-top: 3px;">
-                            <label for="terms-agree" style="font-size: 12px; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                                Saya menyetujui seluruh ketentuan layanan dan privasi data pemesanan di Toko Buku USK.
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px;">
-                            Daftarkan Akun
-                        </button>
-                    </form>
-
-                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 13px; color: var(--text-muted);">
-                        Sudah memiliki akun terdaftar? <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="font-weight: 700;">Masuk di Sini</a>
+                <!-- Quick Demo Fill Buttons -->
+                <div style="margin-top: 20px; background: var(--background); border: 1px dashed var(--border-color); border-radius: var(--radius); padding: 14px; text-align: center;">
+                    <span style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Akses Cepat Mode Demo:</span>
+                    <div style="display: flex; gap: 8px; justify-content: center;">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFillUser()">Login sbg User</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFillAdmin()">Login sbg Admin</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <!-- REGISTER VIEW -->
+            <div id="auth-register-pane" style="display: none;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Pendaftaran Akun Baru</h2>
+                    <p style="font-size: 13.5px; color: var(--text-muted);">Lengkapi data diri di bawah ini untuk membuat akun Toko Buku USK</p>
+                </div>
+
+                <div class="alert alert-info" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 18px; font-size: 12.5px;">
+                    <span>Sistem mewajibkan penggunaan alamat email berdomain <strong>@gmail.com</strong>.</span>
+                </div>
+
+                <form onsubmit="handleRegisterPreview(event)">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Nama Lengkap</label>
+                        <input type="text" id="reg-name" class="form-control" placeholder="Contoh: Muhammad Fadhil" required>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Alamat Email (@gmail.com)</label>
+                        <input type="email" id="reg-email" class="form-control" placeholder="contoh.anda@gmail.com" required>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Kata Sandi (Minimal 8 Karakter)</label>
+                        <input type="password" id="reg-password" class="form-control" placeholder="Minimal 8 karakter..." required minlength="8">
+                    </div>
+
+                    <div style="margin-bottom: 22px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Konfirmasi Kata Sandi</label>
+                        <input type="password" id="reg-confirm" class="form-control" placeholder="Ketik ulang kata sandi..." required minlength="8">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 14.5px; font-weight: 700;">
+                        Daftarkan Akun Baru &rarr;
+                    </button>
+                </form>
+
+                <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                    <span style="font-size: 13px; color: var(--text-muted);">Sudah memiliki akun? </span>
+                    <a href="javascript:void(0)" onclick="switchAuthMode('login')" style="font-size: 13px; font-weight: 700;">Masuk di Sini</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 Toko Buku USK. Sistem Pembelian &amp; Pengelolaan Katalog Buku Kampus.</p>
+        <p>&copy; 2026 Toko Buku USK. Sistem Pembelian &amp; Pengelolaan Katalog Buku.</p>
     </footer>
 
+    <!-- Notification Toast -->
+    <div class="toast" id="toast"></div>
+
     <script src="js/app.js"></script>
+    <script>
+        // Check if query param ?mode=register is present
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') === 'register') {
+            switchAuthMode('register');
+        }
+    </script>
 </body>
 </html>
-
